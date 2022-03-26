@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var inputCurrency: String = ""
     @State private var outputCurrency: String = ""
     @State private var rate: String = ""
-    @State private var inputAmount = "100"
+    @State private var inputAmount = ""
     @State private var select1 = CurrencySelection.all
     @State private var select2 = CurrencySelection.all
 
@@ -20,14 +20,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section {
-                    TextField("Type the amount to be converted here", text: $inputAmount)
-                        .keyboardType(.decimalPad)
-                    
-                    Text(rate)
-                    
-                }
-                    
+               
                 Section {
                         
                     Picker(selection: $select1, label: Text("From")) {
@@ -44,28 +37,38 @@ struct ContentView: View {
                         }
                     }
                         
-                    Section {
-                        Button(action: {
-                            apiRequest(url: "https://api.exchangerate.host/latest?base=\(select1.id)&amount=\(inputAmount)") {currencyData in
-
-                                for (key, value) in currencyData.rates {
-                                    if key == select2.id {
-                                        rate = String(value)
-                                        break
-                                    }
-//                                    print("\(key) -> \(value)")
-                                }
-                                print(currencyData)
-                                
-                            }
-                        }, label: {
-                            Text("CONVERT")
-                                .font(.headline)
-                                .multilineTextAlignment(.center)
-                        })
-                    }
+                   
                         
                     }
+                
+                Section {
+                    TextField("Type the amount to be converted here", text: $inputAmount)
+                        .keyboardType(.decimalPad)
+                    
+                    Text(rate+" \(select2.id)")
+                    
+                }
+                
+                Section {
+                    Button(action: {
+                        apiRequest(url: "https://api.exchangerate.host/latest?base=\(select1.id)&amount=\(inputAmount)") {currencyData in
+
+                            for (key, value) in currencyData.rates {
+                                if key == select2.id {
+                                    rate = String(value)
+                                    break
+                                }
+//                                    print("\(key) -> \(value)")
+                            }
+                            print(currencyData)
+                            
+                        }
+                    }, label: {
+                        Text("CONVERT")
+                            .font(.headline)
+                            .multilineTextAlignment(.center)
+                    })
+                }
                 
                 }.navigationBarTitle("Currency Converter")
         }
