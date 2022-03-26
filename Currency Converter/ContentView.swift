@@ -26,27 +26,21 @@ struct ContentView: View {
                     Picker(selection: $select1, label: Text("From")) {
                         ForEach(CurrencySelection.allCases, id: \.self) { currency in
                             Text(currency.rawValue)
-                                
                         }
                     }
                         
                     Picker(selection: $select2, label: Text("To")) {
                         ForEach(CurrencySelection.allCases, id: \.self) { currency in
                             Text(currency.rawValue)
-                                
                         }
                     }
-                        
-                   
-                        
-                    }
+                }
                 
                 Section {
                     TextField("Type the amount to be converted here", text: $inputAmount)
                         .keyboardType(.decimalPad)
                     
                     Text(rate+" \(select2.id)")
-                    
                 }
                 
                 Section {
@@ -61,7 +55,6 @@ struct ContentView: View {
 //                                    print("\(key) -> \(value)")
                             }
                             print(currencyData)
-                            
                         }
                     }, label: {
                         Text("CONVERT")
