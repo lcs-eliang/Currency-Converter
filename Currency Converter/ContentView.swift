@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var currencyType: String = ""
     @State private var inputAmount = ""
     @State private var selectCurrencySelection = CurrencySelection.all
+    @State private var selectCurrencySelection2 = CurrencySelection.all
     
     var body: some View {
         NavigationView {
@@ -39,7 +40,7 @@ struct ContentView: View {
                             }.pickerStyle(.wheel)
                         }
                         
-                        Picker(selection: $selectCurrencySelection, label: Text("To")) {
+                        Picker(selection: $selectCurrencySelection2, label: Text("To")) {
                             ForEach(CurrencySelection.allCases, id: \.self) { currency in
                                 Text(currency.rawValue)
                                 
