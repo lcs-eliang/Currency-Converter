@@ -9,7 +9,7 @@ import Foundation
 
 struct CurrencyData: Codable {
     var success: Bool
-    var base: String
+    var base = String("USD")
     var date: String
     var rates = [String: Double]()
 }
