@@ -2,7 +2,7 @@
 //  CurrencySelection.swift
 //  Currency Converter
 //
-//  Created by Xiaoyu Liang on 2022-03-25.
+//  Created by Xiaoyu Liang on 2022-03-26.
 //
 
 import Foundation
@@ -169,7 +169,7 @@ enum CurrencySelection: String, CaseIterable, Codable, Identifiable {
     case ZAR = "ZAR"
     case ZMW = "ZMW"
     case ZWL = "ZWL"
-    
+
     var id: String { self.rawValue }
-    
+
 }

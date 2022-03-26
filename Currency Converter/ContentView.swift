@@ -9,47 +9,55 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var inputCurrency = 0
-    @State private var outputCurrency = 1
+    @State private var inputCurrency: String = ""
+    @State private var outputCurrency: String = ""
     @State private var rate: String = ""
-    @State private var currencyType: String = ""
-    @State private var inputAmount = ""
-    @State private var selectCurrencySelection = CurrencySelection.all
-    @State private var selectCurrencySelection2 = CurrencySelection.all
+    @State private var inputAmount = "100"
+    @State private var select1 = CurrencySelection.all
+    @State private var select2 = CurrencySelection.all
+
     
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Currency Converter")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.leading)
+            Form {
+                Section {
+                    TextField("Type the amount to be converted here", text: $inputAmount)
+                        .keyboardType(.decimalPad)
                     
-                Form {
-                    Section {
-                        TextField("Type the amount to be converted here", text: $inputAmount)
-                                .keyboardType(.decimalPad)
-                        }
+                    Text(rate)
                     
-                    Section {
+                }
+                    
+                Section {
                         
-                        Picker(selection: $selectCurrencySelection, label: Text("From")) {
-                            ForEach(CurrencySelection.allCases, id: \.self) { currency in
-                                Text(currency.rawValue)
+                    Picker(selection: $select1, label: Text("From")) {
+                        ForEach(CurrencySelection.allCases, id: \.self) { currency in
+                            Text(currency.rawValue)
                                 
-                            }.pickerStyle(.wheel)
                         }
+                    }
                         
-                        Picker(selection: $selectCurrencySelection2, label: Text("To")) {
-                            ForEach(CurrencySelection.allCases, id: \.self) { currency in
-                                Text(currency.rawValue)
+                    Picker(selection: $select2, label: Text("To")) {
+                        ForEach(CurrencySelection.allCases, id: \.self) { currency in
+                            Text(currency.rawValue)
                                 
-                            }.pickerStyle(.wheel)
                         }
+                    }
                         
                     Section {
                         Button(action: {
-                           
+                            apiRequest(url: "https://api.exchangerate.host/latest?base=\(select1.id)&amount=\(inputAmount)") {currencyData in
+
+                                for (key, value) in currencyData.rates {
+                                    if key == select2.id {
+                                        rate = String(value)
+                                        break
+                                    }
+//                                    print("\(key) -> \(value)")
+                                }
+                                print(currencyData)
+                                
+                            }
                         }, label: {
                             Text("CONVERT")
                                 .font(.headline)
@@ -58,24 +66,10 @@ struct ContentView: View {
                     }
                         
                     }
-                }
-            }
+                
+                }.navigationBarTitle("Currency Converter")
         }
      
-            Text("USD:"+currencyType+"= 100:"+rate)
-                .padding().onAppear {
-                    apiRequest(url: "https://api.exchangerate.host/latest?base=USD&amount=100") {currencyData in
-                        for (key, value) in currencyData.rates {
-                            if key == currencyType {
-                                rate = String(value)
-                                break
-                            }
-                            print("\(key) -> \(value)")
-                        }
-                        //print(currencyData)
-                        
-                        }
-                }
         }
     
     }
