@@ -15,7 +15,7 @@ struct ContentView: View {
     @State private var inputAmount = ""
     @State private var select1 = CurrencySelection.all
     @State private var select2 = CurrencySelection.all
-
+    @State private var searchTerm = ""
     
     var body: some View {
         NavigationView {
@@ -27,7 +27,7 @@ struct ContentView: View {
                         ForEach(CurrencySelection.allCases, id: \.self) { currency in
                             Text(currency.rawValue)
                         }
-                    }
+                    }.searchable(text: $searchTerm)
                         
                     Picker(selection: $select2, label: Text("To")) {
                         ForEach(CurrencySelection.allCases, id: \.self) { currency in

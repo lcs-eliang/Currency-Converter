@@ -12,13 +12,14 @@ struct ContentView1: View {
     @State private var rate: String = ""
     @State private var inputAmount = ""
     @State private var selected1 = 0
-    @State private var selected2 = 0
+    @State private var selected2 = 1
     @State private var currencyList = ["USD"]
+    @State private var searchTerm = ""
     
     var body: some View {
         
         if currencyList.count == 1 {
-            Text("Loading").onAppear(perform: {
+            Text("Loading...").onAppear(perform: {
                 apiRequest(url: "https://api.exchangerate.host/latest?base=USD&amount=100") { currencyData in
                     
                     for (key, _) in currencyData.rates {
@@ -32,13 +33,21 @@ struct ContentView1: View {
             
             NavigationView {
                 Form {
-                    
-                    Section {
+                    List {
+                        Section {
                         
                         Picker(selection: $selected1, label: Text("From")) {
-                            ForEach(0..<currencyList.count, id: \.self) {
-                                Text(currencyList[$0])
+                            List(filter(originalList: currencyList, using: searchTerm), id: \.self) { currencyList in
+                                Text(currencyList)
                             }
+                            .navigationTitle("Currencies")
+                            .searchable(text: $searchTerm)
+                            
+                                ForEach(0..<currencyList.count, id: \.self) {
+                                Text(currencyList[$0])
+                                }
+                            }
+                            .searchable(text: $searchTerm)
                         }
                         
                         
@@ -48,12 +57,9 @@ struct ContentView1: View {
                                 
                             }
                         }
-                        
-                        
-                        
                     }
                     
-                    Section {
+                        Section {
                         TextField("Type the amount to be converted here", text: $inputAmount)
                             .keyboardType(.decimalPad)
                         
@@ -79,14 +85,15 @@ struct ContentView1: View {
                                 .multilineTextAlignment(.center)
                         })
                     }
+                        
+                    }
                     
                 }.navigationBarTitle("Currency Converter")
             }
         }
-        
     }
     
-}
+
 
 
 
