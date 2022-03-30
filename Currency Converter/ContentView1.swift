@@ -33,22 +33,19 @@ struct ContentView1: View {
             
             NavigationView {
                 Form {
-                    List {
-                        Section {
+                    Section {
+                    
+                    Picker(selection: $selected1, label: Text("From")) {
+                        List(filter(originalList: currencyList, using: searchTerm), id: \.self) { currencyList in
+                            Text(currencyList)
+                        }.searchable(text: $searchTerm)
                         
-                        Picker(selection: $selected1, label: Text("From")) {
-                            List(filter(originalList: currencyList, using: searchTerm), id: \.self) { currencyList in
-                                Text(currencyList)
-                            }
-                            .navigationTitle("Currencies")
-                            .searchable(text: $searchTerm)
-                            
-                                ForEach(0..<currencyList.count, id: \.self) {
-                                Text(currencyList[$0])
-                                }
-                            }
-                            .searchable(text: $searchTerm)
-                        }
+//                            ForEach(0..<currencyList.count, id: \.self) {
+//                            Text(currencyList[$0])
+//                            }
+                    }.searchable(text: $searchTerm)
+                        
+                    }
                         
                         
                         Picker(selection: $selected2, label: Text("To")) {
@@ -57,7 +54,7 @@ struct ContentView1: View {
                                 
                             }
                         }
-                    }
+                    
                     
                         Section {
                         TextField("Type the amount to be converted here", text: $inputAmount)
@@ -86,12 +83,12 @@ struct ContentView1: View {
                         })
                     }
                         
-                    }
+                    }.navigationTitle("Currency Converter")
                     
-                }.navigationBarTitle("Currency Converter")
+                }
             }
         }
-    }
+}
     
 
 
