@@ -20,14 +20,15 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-               
                 Section {
                         
                     Picker(selection: $select1, label: Text("From")) {
+                        
                         ForEach(CurrencySelection.allCases, id: \.self) { currency in
                             Text(currency.rawValue)
                         }
-                    }.searchable(text: $searchTerm)
+                        
+                    }
                         
                     Picker(selection: $select2, label: Text("To")) {
                         ForEach(CurrencySelection.allCases, id: \.self) { currency in

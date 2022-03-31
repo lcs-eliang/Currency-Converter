@@ -43,7 +43,7 @@ struct ContentView1: View {
 //                            ForEach(0..<currencyList.count, id: \.self) {
 //                            Text(currencyList[$0])
 //                            }
-                    }.searchable(text: $searchTerm)
+                    }
                         
                     }
                         

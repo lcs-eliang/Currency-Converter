@@ -15,8 +15,7 @@ func filter(originalList: [String], using term: String) -> [String] {
         
     } else {
         
-        let temporaryList: [String] = [""]
-        return temporaryList
+        return originalList.filter { $0.contains(term) }
         
     }
     
