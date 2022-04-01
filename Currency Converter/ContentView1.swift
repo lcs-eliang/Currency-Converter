@@ -18,8 +18,9 @@ struct ContentView1: View {
     @State private var saveList: [ConvertItem] = []
     
     
+    
     var body: some View {
-        
+       
         if currencyList.count == 1 {
             Text("Loading...").onAppear(perform: {
                 apiRequest(url: "https://api.exchangerate.host/latest?base=USD&amount=100") { currencyData in
@@ -32,8 +33,8 @@ struct ContentView1: View {
             })
             
         } else {
-            
-            NavigationView {
+            TabView {
+                NavigationView {
                 Form {
                     Section {
                     
@@ -100,29 +101,38 @@ struct ContentView1: View {
                         }
                     
                     
-                    Section {
-                        
-                        List {
-                                
-                                Text("History Saved Convertions")
-                                    .font(.title3)
-                                
-                                ForEach(0..<saveList.count, id: \.self) {
-                                    Text("\(saveList[$0].fromValue) \(saveList[$0].from) = \(saveList[$0].toValue) \(saveList[$0].to)")
-                                }
-
-                          
-                        }
-                    }
+                  
                         
                 }.navigationTitle("Currency Converter")
+            }
+            .tabItem {
+                Text("Converter")
+                    .font(.headline)
+            }
+                TabView {
+                    NavigationView {
                     
+                    List(filter(originalList: currencyList, using: searchTerm), id: \.self) { item in
+                            
+                            ForEach(0..<saveList.count, id: \.self) {
+                                Text("\(saveList[$0].fromValue) \(saveList[$0].from) = \(saveList[$0].toValue) \(saveList[$0].to)")
+                            }
+
+                      
+                    }.searchable(text: $searchTerm)
+                    }.navigationTitle("History Saved Convertions")
                 }
+                .tabItem {
+                    Text("History")
+                        .font(.headline)
+                }
+                
+              
             }
         }
 }
     
-
+}
 
 
 
