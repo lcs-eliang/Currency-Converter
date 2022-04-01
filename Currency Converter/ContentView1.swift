@@ -103,7 +103,6 @@ struct ContentView1: View {
                     Section {
                         
                         List {
-                           
                                 
                                 Text("History Saved Convertions")
                                     .font(.title3)
@@ -112,7 +111,6 @@ struct ContentView1: View {
                                     Text("\(saveList[$0].fromValue) \(saveList[$0].from) = \(saveList[$0].toValue) \(saveList[$0].to)")
                                 }
 
-                            
                           
                         }
                     }
