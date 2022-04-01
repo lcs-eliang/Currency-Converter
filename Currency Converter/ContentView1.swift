@@ -64,6 +64,8 @@ struct ContentView1: View {
                         
                         Text(rate+" \(currencyList[selected2])")
                         
+                    }.onTapGesture {
+                        hideKeyboard()
                     }
                     
                     Section {
@@ -88,7 +90,7 @@ struct ContentView1: View {
                         
                         
                             Button(action: {
-                            let item: ConvertItem = ConvertItem(from: currencyList[selected1],
+                                let item: ConvertItem = ConvertItem(from: currencyList[selected1],
                                                                 to: currencyList[selected2],
                                                                 fromValue: inputAmount,
                                                                 toValue: rate)
@@ -101,12 +103,13 @@ struct ContentView1: View {
                         }
                     
                     
-                  
+                    
                         
                 }.navigationTitle("Currency Converter")
             }
+                
             .tabItem {
-                Text("Converter")
+                Label("Converter", systemImage: "arrow.left.arrow.right")
                     .font(.headline)
             }
                 TabView {
@@ -114,7 +117,7 @@ struct ContentView1: View {
                     
                     List(filter(originalList: currencyList, using: searchTerm), id: \.self) { item in
                             
-                            ForEach(0..<saveList.count, id: \.self) {
+                        ForEach(0..<saveList.count, id: \.self) {
                                 Text("\(saveList[$0].fromValue) \(saveList[$0].from) = \(saveList[$0].toValue) \(saveList[$0].to)")
                             }
 
@@ -123,8 +126,8 @@ struct ContentView1: View {
                     }.navigationTitle("History Saved Convertions")
                 }
                 .tabItem {
+                    Label("History", systemImage: "clock")
                     Text("History")
-                        .font(.headline)
                 }
                 
               
@@ -132,6 +135,13 @@ struct ContentView1: View {
         }
 }
     
+}
+
+extension View {
+    func hideKeyboard() {
+        let resign = #selector(UIResponder.resignFirstResponder)
+        UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
+    }
 }
 
 
