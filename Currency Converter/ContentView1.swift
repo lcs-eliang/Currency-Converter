@@ -15,6 +15,8 @@ struct ContentView1: View {
     @State private var selected2 = 1
     @State private var currencyList = ["USD"]
     @State private var searchTerm = ""
+    @State private var saveList: [ConvertItem] = []
+    
     
     var body: some View {
         
@@ -35,16 +37,15 @@ struct ContentView1: View {
                 Form {
                     Section {
                     
-                    Picker(selection: $selected1, label: Text("From")) {
-                        List(filter(originalList: currencyList, using: searchTerm), id: \.self) { currencyList in
-                            Text(currencyList)
-                        }.searchable(text: $searchTerm)
-                        
-//                            ForEach(0..<currencyList.count, id: \.self) {
-//                            Text(currencyList[$0])
-//                            }
-                    }
-                        
+                        Picker(selection: $selected1, label: Text("From")) {
+//                        List(filter(originalList: currencyList, using: searchTerm), id: \.self) { item in
+//                                Text(item)
+//                        }
+
+                            ForEach(0..<currencyList.count, id: \.self) {
+                            Text(currencyList[$0])
+                            }
+                        }
                     }
                         
                         
@@ -65,7 +66,8 @@ struct ContentView1: View {
                     }
                     
                     Section {
-                        Button(action: {
+                       
+                            Button(action: {
                             apiRequest(url: "https://api.exchangerate.host/latest?base=\(currencyList[selected1])&amount=\(inputAmount)") {currencyData in
                                 for (key, value) in currencyData.rates {
                                     if key == currencyList[selected2] {
@@ -81,9 +83,41 @@ struct ContentView1: View {
                                 .font(.headline)
                                 .multilineTextAlignment(.center)
                         })
+                            
+                        
+                        
+                            Button(action: {
+                            let item: ConvertItem = ConvertItem(from: currencyList[selected1],
+                                                                to: currencyList[selected2],
+                                                                fromValue: inputAmount,
+                                                                toValue: rate)
+                           
+                            saveList.append(item)
+                        }, label: {
+                           Text("SAVE")
+                                .font(.headline)
+                        })
+                        }
+                    
+                    
+                    Section {
+                        
+                        List {
+                           
+                                
+                                Text("History Saved Convertions")
+                                    .font(.title3)
+                                
+                                ForEach(0..<saveList.count, id: \.self) {
+                                    Text("\(saveList[$0].fromValue) \(saveList[$0].from) = \(saveList[$0].toValue) \(saveList[$0].to)")
+                                }
+
+                            
+                          
+                        }
                     }
                         
-                    }.navigationTitle("Currency Converter")
+                }.navigationTitle("Currency Converter")
                     
                 }
             }
