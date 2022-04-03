@@ -7,11 +7,20 @@
 
 import Foundation
 
-struct ConvertItem: Codable, Identifiable {
+struct ConvertItem: Codable, Identifiable, Hashable {
     var id: Int = 0
     var from: String = ""
     var to: String = ""
     var fromValue: String = ""
     var toValue: String = ""
+    
+
+    func toString() -> String {
+        return "\(fromValue) \(from) = \(toValue) \(to)"
+    }
+    
+    func contains(term: String) -> Bool {
+        return toString().contains(term)
+    }
   
 }

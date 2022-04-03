@@ -7,7 +7,7 @@
 
 import Foundation
 
-func filter(originalList: [String], using term: String) -> [String] {
+func filter(originalList: [ConvertItem], using term: String) -> [ConvertItem] {
     
     // User is not searching...
     if term.isEmpty {
@@ -16,12 +16,7 @@ func filter(originalList: [String], using term: String) -> [String] {
         return originalList
         
     } else {
-        
-        // Return the filtered list
-        
-        // TODO: Delete lines 51 to 53 and replace with appropriate logic
-        let temporaryList: [String] = ["Pistachio"]
-        return temporaryList
+        return originalList.filter { $0.contains(term: term) }
     }
     
 }
