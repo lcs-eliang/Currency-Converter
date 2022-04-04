@@ -40,10 +40,7 @@ struct ContentView1: View {
                         Section {
                             
                             Picker(selection: $selected1, label: Text("From")) {
-                                //                        List(filter(originalList: currencyList, using: searchTerm), id: \.self) { item in
-                                //                                Text(item)
-                                //                        }
-                                
+                               
                                 ForEach(0..<currencyList.count, id: \.self) {
                                     Text(currencyList[$0])
                                 }
@@ -106,27 +103,34 @@ struct ContentView1: View {
                         
                         
                     }
-                }.navigationTitle("Currency Converter")
-            }.tabItem {
-                        Label("Converter", systemImage: "arrow.left.arrow.right")
-                            .font(.headline)
-                    }
+                    .navigationTitle("Currency Converter")
+                }
+                .tabItem {
+                    Label("Converter", systemImage: "arrow.left.arrow.right")
+                        .font(.headline)
+                }
             
-                TabView {
-                    NavigationView {
             
+            
+           
+                NavigationView {
+        
                     List(filter(originalList: saveList, using: searchTerm), id: \.self) { item in
                         
                         Text(item.toString())
                         
-                    }.searchable(text: $searchTerm)
-                    }.navigationTitle("History")
-                }.tabItem {
-                        Label("History", systemImage: "clock")
-                        Text("History")
                     }
+                    .searchable(text: $searchTerm)
+                }
+                .navigationTitle("History")
+                .tabItem {
+                    Label("History", systemImage: "clock")
+                        .font(.headline)
+                        }
+            }
+            
                         
-                    }
+        }
                 
                 
                 
