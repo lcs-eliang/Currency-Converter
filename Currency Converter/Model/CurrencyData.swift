@@ -2,7 +2,7 @@
 //  CurrencyData.swift
 //  Currency Converter
 //
-//  Created by Xiaoyu Liang on 2022-03-13.
+//  Created by Xiaoyu Liang on 2022-04-03.
 //
 
 import Foundation

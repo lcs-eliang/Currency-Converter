@@ -1,5 +1,5 @@
 //
-//  ContentView1.swift
+//  ContentView.swift
 //  Currency Converter
 //
 //  Created by Xiaoyu Liang on 2022-03-26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView1: View {
+struct ContentView: View {
     
     @State private var rate: String = ""
     @State private var inputAmount = ""
@@ -147,9 +147,9 @@ struct ContentView1: View {
         
         
         
-        struct ContentView1_Previews: PreviewProvider {
+        struct ContentView_Previews: PreviewProvider {
             static var previews: some View {
-                ContentView1()
+                ContentView()
             }
         }
         
